@@ -61,27 +61,27 @@ def del_txt(file_name):
         log.error(f"{file_name}不存在或不是一个文件")
 
 
-def get_thread_number(size, thread_name: str = 'ThreadNum'):
+def get_thread_number(size, thread_name: str = 'ThreadNumber'):
     """获取线程数"""
-    thread_num = 5
+    thread_number = 5
     value = get_env(thread_name)
     if value is not None:
         try:
-            thread_num = int(value)
+            thread_number = int(value)
         except Exception:
-            log.info(f"线程数设置有误，设置默认数量{thread_num}")
+            log.info(f"线程数设置有误，设置默认数量{thread_number}")
     else:
-        log.info(f"暂未设置线程数，默认数量{thread_num}")
+        log.info(f"暂未设置线程数，默认数量{thread_number}")
 
-    if thread_num > size:
-        thread_num = size
+    if thread_number > size:
+        thread_number = size
         log.info(f"线程数量大于文本数量，设置文本数量{size}")
 
-    if thread_num < 1:
-        thread_num = 1
+    if thread_number < 1:
+        thread_number = 1
         log.info("线程数量不能小于0，设置默认数量1")
 
-    return thread_num
+    return thread_number
 
 
 def get_proxy_api(application: str = None, proxy_name: str = 'Proxy_API'):

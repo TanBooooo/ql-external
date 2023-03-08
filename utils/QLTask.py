@@ -2,7 +2,7 @@ from abc import ABCMeta, abstractmethod
 from concurrent.futures import ThreadPoolExecutor
 
 from notify import send
-from utils.CommonUtil import log, load_txt, get_proxy_api, get_thread_number
+from utils.CommonUtil import log, load_txt, get_proxy_api, get_thread_number, get_env
 
 
 class QLTask(metaclass=ABCMeta):
@@ -33,8 +33,8 @@ def main(task_name: str, ql: QLTask, file_name: str):
     log.info("=====End Load Data=====\n")
 
     log.info("=====Start Load Config=====")
-    api_url = get_proxy_api()
-    thread_num = get_thread_number(len(lines))
+    api_url = get_proxy_api('Proxy_API')
+    thread_num = get_thread_number('ThreadNumber', len(lines))
     log.info("=====End Load Config=====\n")
 
     log.info(f"=====Start {task_name}=====")

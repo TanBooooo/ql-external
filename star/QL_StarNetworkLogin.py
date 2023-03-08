@@ -4,7 +4,7 @@ new Env('StarNetwork登录')
 """
 import requests
 
-from ql_task import main, QLTask
+from utils.QLTask import main, QLTask
 from utils.CommonUtil import log, lock, get_proxy, write_txt
 from utils.StarNetworkUtil import get_headers, encrypt_hash, is_exception
 

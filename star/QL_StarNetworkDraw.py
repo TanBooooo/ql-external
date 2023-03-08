@@ -5,7 +5,7 @@ new Env('StarNetwork抽奖')
 
 import requests
 
-from ql_task import main, QLTask
+from utils.QLTask import main, QLTask
 from utils.CommonUtil import log, get_proxy
 from utils.StarNetworkUtil import get_headers, is_exception, encrypt_hash
 

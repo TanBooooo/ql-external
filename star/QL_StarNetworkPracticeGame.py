@@ -7,7 +7,7 @@ import time
 
 import requests
 
-from ql_task import main, QLTask
+from utils.QLTask import main, QLTask
 from utils.CommonUtil import log, lock, get_proxy
 from utils.StarNetworkUtil import encrypt_key, get_headers, is_exception
 

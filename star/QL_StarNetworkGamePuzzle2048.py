@@ -111,7 +111,7 @@ class StarNetworkGame(QLTask):
             log.info(f"-----Fail Statistics-----")
             log_data = ''
             for fail in self.fail_email:
-                log_data += fail
+                log_data += fail + '\n'
             log.error(f'\n{log_data}')
 
     def save(self):

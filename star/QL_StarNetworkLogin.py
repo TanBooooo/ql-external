@@ -75,14 +75,14 @@ class StarNetworkLogin(QLTask):
             log.info(f"-----Blocked Statistics-----")
             log_data = ''
             for blocked in self.blocked_email:
-                log_data += blocked
+                log_data += blocked + '\n'
             log.error(f'\n{log_data}')
 
         if len(self.fail_email) > 0:
             log.info(f"-----Fail Statistics-----")
             log_data = ''
             for fail in self.fail_email:
-                log_data += fail
+                log_data += fail + '\n'
             log.error(f'\n{log_data}')
 
     def save(self):

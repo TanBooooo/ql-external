@@ -100,4 +100,4 @@ class StarNetworkLogin(StarNetwork):
 
 if __name__ == '__main__':
     login = StarNetworkLogin()
-    main("StarNetwork登录", StarNetworkLogin(), 'StarNetwork')
+    main("StarNetwork登录", StarNetworkLogin(), 'star')

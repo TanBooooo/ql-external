@@ -80,8 +80,15 @@ def get_thread_number(size, thread_name: str = 'ThreadNum'):
     return thread_num
 
 
-def get_proxy_api(proxy_name: str = 'Proxy_API'):
+def get_proxy_api(application: str = None, proxy_name: str = 'Proxy_API'):
     """获取代理API"""
+    api_url = ''
+    if application is not None and application != '':
+        items = get_env('Disable_Proxy').split('&')
+        if application in items:
+            log.info("当前任务已禁用代理")
+            return api_url
+
     api_url = get_env(proxy_name)
     if api_url is None or api_url == '':
         log.info("暂未设置代理API，默认不代理")

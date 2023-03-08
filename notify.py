@@ -4,6 +4,7 @@ import base64
 import hashlib
 import hmac
 import json
+import logging
 import os
 import re
 import threading
@@ -16,9 +17,14 @@ from email.utils import formataddr
 
 import requests
 
-from utils.CommonUtil import log
-
 # 原先的 log.info 函数和主线程的锁
+logging.basicConfig(
+    level=logging.INFO,
+    datefmt="%H:%M:%S",
+    format='%(asctime)s [%(lineno)d] %(levelname)s %(message)s',
+)
+log = logging.getLogger()
+
 mutex = threading.Lock()
 
 # 通知服务

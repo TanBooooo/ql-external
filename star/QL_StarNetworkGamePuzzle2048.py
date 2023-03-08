@@ -1,6 +1,6 @@
 """
 cron: 50 59 1 * * ?
-new Env('StarNetwork锦标赛游戏')
+new Env('StarNetwork游戏-Puzzle2048')
 """
 import datetime
 import random
@@ -113,4 +113,4 @@ class StarNetworkGame(StarNetwork):
 
 
 if __name__ == '__main__':
-    main('StarNetwork锦标赛游戏', StarNetworkGame("puzzle_2048"))
+    main('StarNetwork游戏-Puzzle2048', StarNetworkGame("puzzle_2048"))

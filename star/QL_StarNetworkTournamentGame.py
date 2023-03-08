@@ -1,6 +1,6 @@
 """
 cron: 0 0 0 * * ?
-new Env('StarNetwork练习游戏')
+new Env('StarNetwork锦标赛游戏')
 """
 import random
 import time
@@ -82,4 +82,4 @@ class StarNetworkPracticeGame(StarNetwork):
 
 
 if __name__ == '__main__':
-    main('StarNetwork练习游戏', StarNetworkPracticeGame(), 'StarNetworkToken')
+    main('StarNetwork锦标赛游戏', StarNetworkPracticeGame(), 'StarNetworkToken')

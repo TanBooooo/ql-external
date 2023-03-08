@@ -61,7 +61,7 @@ def del_txt(file_name):
         log.error(f"{file_name}不存在或不是一个文件")
 
 
-def get_thread_number(size, thread_name='ThreadNumber'):
+def get_thread_number(size, thread_name='THREAD_NUMBER'):
     """获取线程数"""
     thread_number = 5
     value = get_env(thread_name)
@@ -84,7 +84,7 @@ def get_thread_number(size, thread_name='ThreadNumber'):
     return thread_number
 
 
-def get_proxy_api(application=None, proxy_name='Proxy_API'):
+def get_proxy_api(application=None, proxy_name='PROXY_API'):
     """获取代理API"""
     api_url = ''
     if application is not None and application != '':

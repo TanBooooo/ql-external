@@ -4,8 +4,9 @@ new Env('StarNetwork挖矿')
 """
 import requests
 
-from utils.CommonUtil import get_proxy, main, QLTask
-from utils.StarNetworkUtil import get_headers, lock, log, is_exception
+from ql_task import main, QLTask
+from utils.CommonUtil import log, lock, get_proxy
+from utils.StarNetworkUtil import get_headers, is_exception
 
 
 class StarNetworkMining(QLTask):

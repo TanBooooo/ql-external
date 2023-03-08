@@ -8,8 +8,9 @@ import time
 
 import requests
 
-from utils.CommonUtil import log, get_proxy, main, QLTask
-from utils.StarNetworkUtil import lock, get_headers, encrypt_key, is_exception
+from ql_task import main, QLTask
+from utils.CommonUtil import log, lock, get_proxy
+from utils.StarNetworkUtil import get_headers, encrypt_key, is_exception
 
 
 class StarNetworkGame(QLTask):

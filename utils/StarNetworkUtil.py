@@ -1,13 +1,7 @@
 import hashlib
-import threading
 import time
-from abc import ABCMeta, abstractmethod
-from concurrent.futures import ThreadPoolExecutor
 
-from notify import send
-from utils.CommonUtil import load_txt, get_thread_number, log, get_proxy_api
 
-lock = threading.RLock()
 
 
 def encrypt_hash(payload):

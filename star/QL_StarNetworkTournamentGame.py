@@ -7,11 +7,11 @@ import time
 
 import requests
 
-from utils.CommonUtil import get_proxy, log
-from utils.StarNetworkUtil import encrypt_key, get_headers, StarNetwork, lock, is_restrict, main
+from utils.CommonUtil import get_proxy, log, main, QLTask
+from utils.StarNetworkUtil import encrypt_key, get_headers, lock, is_restrict
 
 
-class StarNetworkPracticeGame(StarNetwork):
+class StarNetworkPracticeGame(QLTask):
     def __init__(self):
         self.total_count = 0
         self.success_count = 0

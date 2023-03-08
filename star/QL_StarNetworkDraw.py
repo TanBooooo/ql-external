@@ -5,11 +5,11 @@ new Env('StarNetwork抽奖')
 
 import requests
 
-from utils.CommonUtil import get_proxy
-from utils.StarNetworkUtil import get_headers, main, log, is_restrict, encrypt_hash, StarNetwork
+from utils.CommonUtil import get_proxy,main,QLTask
+from utils.StarNetworkUtil import get_headers, log, is_restrict, encrypt_hash
 
 
-class StarNetworkDraw(StarNetwork):
+class StarNetworkDraw(QLTask):
     def task(self, index, text, api_url):
         split = text.split('----')
         email = split[0]

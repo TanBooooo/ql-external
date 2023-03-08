@@ -4,11 +4,11 @@ new Env('StarNetwork登录')
 """
 import requests
 
-from utils.CommonUtil import log, get_proxy, write_txt
-from utils.StarNetworkUtil import StarNetwork, get_headers, encrypt_hash, is_restrict, lock, main
+from utils.CommonUtil import log, get_proxy, write_txt, main, QLTask
+from utils.StarNetworkUtil import get_headers, encrypt_hash, is_restrict, lock
 
 
-class StarNetworkLogin(StarNetwork):
+class StarNetworkLogin(QLTask):
     def __init__(self):
         self.total_count = 0
         self.success_email = []
@@ -100,4 +100,4 @@ class StarNetworkLogin(StarNetwork):
 
 if __name__ == '__main__':
     login = StarNetworkLogin()
-    main("StarNetwork登录", StarNetworkLogin(), 'star')
+    main("StarNetwork登录", StarNetworkLogin(), 'StarNetwork')

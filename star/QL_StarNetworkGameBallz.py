@@ -2,11 +2,11 @@
 cron: 50 59 21 * * ?
 new Env('StarNetwork游戏-Ballz')
 """
-from utils.StarNetworkUtil import main
+from utils.CommonUtil import main
 from star.QL_StarNetworkGamePuzzle2048 import StarNetworkGame
 
 if __name__ == '__main__':
-    main('StarNetwork游戏-Ballz', StarNetworkGame("puzzle_ballz"))
+    main('StarNetwork游戏-Ballz', StarNetworkGame("puzzle_ballz"), 'StarNetworkGameToken')
 
 # tournament_id = ''
 # resp = requests.get("https://api.starnetwork.io/v3/game/" + game + "?lang=zh-CN", headers=headers,

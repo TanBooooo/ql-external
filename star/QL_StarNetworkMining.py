@@ -4,11 +4,11 @@ new Env('StarNetwork挖矿')
 """
 import requests
 
-from utils.CommonUtil import get_proxy
-from utils.StarNetworkUtil import get_headers, lock, main, log, is_restrict, StarNetwork
+from utils.CommonUtil import get_proxy, main, QLTask
+from utils.StarNetworkUtil import get_headers, lock, log, is_restrict
 
 
-class StarNetworkMining(StarNetwork):
+class StarNetworkMining(QLTask):
     def __init__(self):
         self.total_count = 0
         self.success_count = 0

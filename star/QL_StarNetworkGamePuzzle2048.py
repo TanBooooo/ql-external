@@ -8,11 +8,11 @@ import time
 
 import requests
 
-from utils.CommonUtil import log, get_proxy
-from utils.StarNetworkUtil import StarNetwork, main, lock, get_headers, encrypt_key, is_restrict
+from utils.CommonUtil import log, get_proxy, main, QLTask
+from utils.StarNetworkUtil import lock, get_headers, encrypt_key, is_restrict
 
 
-class StarNetworkGame(StarNetwork):
+class StarNetworkGame(QLTask):
     def __init__(self, game):
         self.game = game
         self.total_count = 0
@@ -113,4 +113,4 @@ class StarNetworkGame(StarNetwork):
 
 
 if __name__ == '__main__':
-    main('StarNetwork游戏-Puzzle2048', StarNetworkGame("puzzle_2048"))
+    main('StarNetwork游戏-Puzzle2048', StarNetworkGame("puzzle_2048"), 'StarNetworkGameToken')

@@ -8,7 +8,7 @@ import time
 import requests
 
 from utils.CommonUtil import get_proxy, log, main, QLTask
-from utils.StarNetworkUtil import encrypt_key, get_headers, lock, is_restrict
+from utils.StarNetworkUtil import encrypt_key, get_headers, lock, is_exception
 
 
 class StarNetworkPracticeGame(QLTask):
@@ -55,10 +55,13 @@ class StarNetworkPracticeGame(QLTask):
                         self.success_count += 1
                         lock.release()
                         break
-                    if is_restrict(resp.text):
-                        raise Exception('访问被拒绝')
+                    is_exception(resp.text)
                     raise Exception(resp.text)
                 except Exception as ex:
+                    if repr(ex).count('账号被封禁或登录失效') > 0:
+                        log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                        return
+
                     if i != 2:
                         log.info(f'【{index}】{email}----进行第{i + 1}次重试----【{game}】锦标赛参与出错：{repr(ex)}')
                         proxy = get_proxy(api_url)

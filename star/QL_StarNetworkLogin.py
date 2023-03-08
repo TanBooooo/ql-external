@@ -5,7 +5,7 @@ new Env('StarNetwork登录')
 import requests
 
 from utils.CommonUtil import log, get_proxy, write_txt, main, QLTask
-from utils.StarNetworkUtil import get_headers, encrypt_hash, is_restrict, lock
+from utils.StarNetworkUtil import get_headers, encrypt_hash, is_exception, lock, is_blocked
 
 
 class StarNetworkLogin(QLTask):
@@ -33,9 +33,9 @@ class StarNetworkLogin(QLTask):
             try:
                 resp = requests.post("https://api.starnetwork.io/v3/email/login_check", json=payload, headers=headers,
                                      proxies={"https": proxy}, timeout=15)
+                is_exception(resp.text)
+
                 if resp.text.count('jwt') == 0:
-                    if is_restrict(resp.text):
-                        raise Exception('访问被拒绝')
                     raise Exception(resp.text)
 
                 if resp.json()['status'] == 'blocked':
@@ -53,17 +53,22 @@ class StarNetworkLogin(QLTask):
                         log.info(f'【{index}】{email}----ID获取成功')
                         self.success_email.append(f'{email}----{password}----{uid}----{token}')
                     else:
-                        if is_restrict(resp.text):
+                        if is_exception(resp.text):
                             raise Exception('访问被拒绝')
                         raise Exception(resp.text)
                 break
             except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
+
                 if i != 2:
                     log.info(f'【{index}】{email}----进行第{i + 1}次重试----登录出错：{repr(ex)}')
                     proxy = get_proxy(api_url)
                 else:
                     log.info(f'【{index}】{email}----重试完毕----登录出错：{repr(ex)}')
                     self.fail_email.append(f'【{index}】{email}----{password}----登录出错：{repr(ex)}')
+                    break
 
     def statistics(self):
         if len(self.blocked_email) > 0:

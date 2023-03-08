@@ -33,7 +33,8 @@ def get_headers(token=None):
     return headers
 
 
-def is_restrict(text):
+def is_exception(text):
     if text.count('Cloudflare to restrict access') > 0 or text.count('You do not have access to') > 0:
-        return True
-    return False
+        raise Exception('访问被拒绝')
+    if text.count('You are not authr') > 0:
+        raise Exception('账号被封禁或登录失效')

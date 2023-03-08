@@ -5,7 +5,7 @@ new Env('StarNetwork挖矿')
 import requests
 
 from utils.CommonUtil import get_proxy, main, QLTask
-from utils.StarNetworkUtil import get_headers, lock, log, is_restrict
+from utils.StarNetworkUtil import get_headers, lock, log, is_exception
 
 
 class StarNetworkMining(QLTask):
@@ -33,8 +33,7 @@ class StarNetworkMining(QLTask):
                 resp = requests.post("https://apis.starnetwork.io/v3/session/start", headers=headers, timeout=15,
                                      proxies={"https": proxy})
                 if resp.text.count('endAt') == 0:
-                    if is_restrict(resp.text):
-                        raise Exception('访问被拒绝')
+                    is_exception(resp.text)
                     raise Exception(resp.text)
                 else:
                     lock.acquire()
@@ -47,6 +46,10 @@ class StarNetworkMining(QLTask):
                     lock.release()
                 break
             except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
+
                 if i != 2:
                     log.info(f'【{index}】{email}----进行第{i + 1}次重试----挖矿出错：{repr(ex)}')
                     proxy = get_proxy(api_url)

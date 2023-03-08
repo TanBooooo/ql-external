@@ -9,7 +9,7 @@ import time
 import requests
 
 from utils.CommonUtil import log, get_proxy, main, QLTask
-from utils.StarNetworkUtil import lock, get_headers, encrypt_key, is_restrict
+from utils.StarNetworkUtil import lock, get_headers, encrypt_key, is_exception
 
 
 class StarNetworkGame(QLTask):
@@ -45,13 +45,16 @@ class StarNetworkGame(QLTask):
                                    "key": encrypt_key(self.game, 'tournament', score, timestamp)}
                         resp = requests.post("https://api.starnetwork.io/v3/game/record", json=payload, headers=headers,
                                              proxies={"https": proxy}, timeout=15)
-                        if is_restrict(resp.text):
-                            raise Exception('访问被拒绝')
-                        elif resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
+                        is_exception(resp.text)
+
+                        if resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
                             log.info(f'【{index}】{email}----完成游戏成功')
                         else:
                             raise Exception(resp.text)
                     except Exception as ex:
+                        if repr(ex).count('账号被封禁或登录失效') > 0:
+                            log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                            return
                         log.error(f'【{index}】{email}----完成游戏出错：{ex}')
                 else:
                     return
@@ -64,12 +67,14 @@ class StarNetworkGame(QLTask):
                            "timestamp": timestamp, "key": encrypt_key(self.game, 'tournament', score, timestamp)}
                 resp = requests.post("https://api.starnetwork.io/v3/game/record", json=payload, headers=headers,
                                      timeout=15, proxies={"https": proxy})
-                if is_restrict(resp.text):
-                    raise Exception('访问被拒绝')
+                is_exception(resp.text)
+
                 if resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
                     break
-            except Exception:
-                pass
+            except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
 
         for i in range(3):
             try:
@@ -79,9 +84,9 @@ class StarNetworkGame(QLTask):
                            "timestamp": timestamp, "key": encrypt_key(self.game, 'tournament', score, timestamp)}
                 resp = requests.post("https://api.starnetwork.io/v2/game/record", json=payload, headers=headers,
                                      timeout=15, proxies={"https": proxy})
-                if is_restrict(resp.text):
-                    raise Exception('访问被拒绝')
-                elif resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
+                is_exception(resp.text)
+
+                if resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
                     log.info(f'【{index}】{email}----完成游戏成功')
                     lock.acquire()
                     self.success_count += 1
@@ -90,6 +95,10 @@ class StarNetworkGame(QLTask):
                 else:
                     raise Exception(resp.text)
             except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
+
                 if i != 2:
                     log.info(f'【{index}】{email}----进行第{i + 1}次重试----完成游戏出错：{repr(ex)}')
                     proxy = get_proxy(api_url)

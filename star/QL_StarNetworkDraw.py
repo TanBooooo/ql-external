@@ -5,8 +5,8 @@ new Env('StarNetwork抽奖')
 
 import requests
 
-from utils.CommonUtil import get_proxy,main,QLTask
-from utils.StarNetworkUtil import get_headers, log, is_restrict, encrypt_hash
+from utils.CommonUtil import get_proxy, main, QLTask
+from utils.StarNetworkUtil import get_headers, log, is_exception, encrypt_hash, is_blocked
 
 
 class StarNetworkDraw(QLTask):
@@ -24,10 +24,13 @@ class StarNetworkDraw(QLTask):
             try:
                 resp = requests.get('https://api.starnetwork.io/v3/libra/draw', headers=headers, timeout=15,
                                     proxies={"https": proxy})
-                if is_restrict(resp.text):
-                    raise Exception('访问被拒绝')
+                is_exception(resp.text)
                 break
             except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
+
                 if i != 2:
                     log.info(f'【{index}】{email}----进行第{i + 1}次重试----加速抽奖出错：{repr(ex)}')
                     proxy = get_proxy(api_url)
@@ -39,10 +42,14 @@ class StarNetworkDraw(QLTask):
                 payload = {"id": id, "action": "draw_boost"}
                 resp = requests.post('https://api.starnetwork.io/v3/event/draw', json=encrypt_hash(payload), timeout=15,
                                      headers=headers, proxies={"https": proxy})
-                if is_restrict(resp.text):
+                if is_exception(resp.text):
                     raise Exception('访问被拒绝')
                 break
             except Exception as ex:
+                if repr(ex).count('账号被封禁或登录失效') > 0:
+                    log.info(f'【{index}】{email}----账号被封禁或登录失效')
+                    return
+
                 if i != 2:
                     log.info(f'【{index}】{email}----进行第{i + 1}次重试----令牌抽奖出错：{repr(ex)}')
                     proxy = get_proxy(api_url)

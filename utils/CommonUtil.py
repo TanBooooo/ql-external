@@ -123,7 +123,7 @@ def get_proxy(api_url):
         return None
 
     lock.acquire()
-    if len(proxies) > 0:
+    if len(proxies) <= 0:
         for i in range(3):
             try:
                 res = requests.get(api_url)

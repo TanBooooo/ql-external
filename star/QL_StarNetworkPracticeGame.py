@@ -49,10 +49,10 @@ class StarNetworkPracticeGame(QLTask):
                                "key": encrypt_key(game, "practice", score, timestamp)}
                     resp = requests.post("https://api.starnetwork.io/v3/game/record", json=payload, headers=headers,
                                          proxies={"https": proxy}, timeout=15)
-                    if resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
-                        if resp.text.count('reward') > 0:
+                    if resp.text.count('id') > 0:
+                        if resp.text.count('REWARDED') > 0:
                             log.info(f'【{index}】{email}----【{game}】练习成功：获得奖励')
-                        elif resp.text.count('id') > 0 and resp.text.count('SAVED') > 0:
+                        if resp.text.count('SAVED') > 0:
                             log.info(f'【{index}】{email}----【{game}】练习成功：未获得奖励')
                         lock.acquire()
                         self.success_count += 1

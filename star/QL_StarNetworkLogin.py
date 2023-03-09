@@ -87,6 +87,7 @@ class StarNetworkLogin(QLTask):
             log.error(f'\n{log_data}')
 
     def save(self):
+        write_txt("StarNetwork", '')
         if len(self.success_email) > 0:
             log.info(f"-----Save Success-----")
             for success in self.success_email:

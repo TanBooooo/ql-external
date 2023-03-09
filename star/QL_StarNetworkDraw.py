@@ -14,7 +14,8 @@ class StarNetworkDraw(QLTask):
     def task(self, index, text, api_url):
         split = text.split('----')
         email = split[0]
-        token = split[len(split) - 1]
+        id = split[-2]
+        token = split[-1]
 
         log.info(f"【{index}】{email}----正在抽奖")
         headers = get_headers(token)
@@ -33,10 +34,10 @@ class StarNetworkDraw(QLTask):
                     return
 
                 if i != 2:
-                    log.info(f'【{index}】{email}----进行第{i + 1}次重试----加速抽奖出错：{repr(ex)}')
+                    log.info(f'【{index}】{email}----进行第{i + 1}次重试----令牌抽奖出错：{repr(ex)}')
                     proxy = get_proxy(api_url)
                 else:
-                    log.info(f'【{index}】{email}----重试完毕----加速抽奖出错：{repr(ex)}')
+                    log.info(f'【{index}】{email}----重试完毕----令牌抽奖出错：{repr(ex)}')
 
         for i in range(3):
             try:
@@ -52,10 +53,10 @@ class StarNetworkDraw(QLTask):
                     return
 
                 if i != 2:
-                    log.info(f'【{index}】{email}----进行第{i + 1}次重试----令牌抽奖出错：{repr(ex)}')
+                    log.info(f'【{index}】{email}----进行第{i + 1}次重试----加速抽奖出错：{repr(ex)}')
                     proxy = get_proxy(api_url)
                 else:
-                    log.info(f'【{index}】{email}----重试完毕----令牌抽奖出错：{repr(ex)}')
+                    log.info(f'【{index}】{email}----重试完毕----加速抽奖出错：{repr(ex)}')
 
     def statistics(self):
         pass

@@ -3,7 +3,7 @@ cron: 50 59 21 * * ?
 new Env('StarNetwork游戏-Ballz')
 """
 from utils.QLTask import main
-from star.QL_StarNetworkGamePuzzle2048 import StarNetworkGame
+from QL_StarNetworkGamePuzzle2048 import StarNetworkGame
 
 if __name__ == '__main__':
     main('StarNetwork游戏-Ballz', StarNetworkGame("puzzle_ballz"), 'StarNetworkGameToken')

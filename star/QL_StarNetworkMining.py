@@ -70,7 +70,7 @@ class StarNetworkMining(QLTask):
         pass
 
     def push_data(self):
-        return f'总任务数：{self.total_count}\n任务成功数：{self.success_count}\n未到时间数：{self.wait_count}\n任务失败数：{len(self.fail_email)}'
+        return f'总任务数：{self.total_count}\n任务成功数：{self.success_count}\n时间未到数：{self.wait_count}\n任务失败数：{len(self.fail_email)}'
 
 
 if __name__ == '__main__':

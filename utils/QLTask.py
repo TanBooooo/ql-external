@@ -33,7 +33,7 @@ def main(task_name: str, ql: QLTask, file_name: str):
     log.info("=====End Load Data=====\n")
 
     log.info("=====Start Load Config=====")
-    api_url = get_proxy_api()
+    api_url = get_proxy_api(task_name)
     thread_num = get_thread_number(len(lines))
     log.info("=====End Load Config=====\n")
 

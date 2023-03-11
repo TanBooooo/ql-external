@@ -38,7 +38,7 @@ class StarNetworkPracticeGame(QLTask):
             if game == 'flappy':
                 score = str(random.randint(100, 200))
             elif game == 'puzzle_2048':
-                score = str(random.randint(12345, 23333))
+                score = '10000'
             else:
                 score = str(random.randint(8888, 10000))
 

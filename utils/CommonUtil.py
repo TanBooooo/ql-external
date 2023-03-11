@@ -4,12 +4,8 @@ import re
 import sys
 import threading
 import time
-from abc import ABCMeta, abstractmethod
-from concurrent.futures import ThreadPoolExecutor
 
 import requests
-
-from notify import send
 
 logging.basicConfig(
     level=logging.INFO,
@@ -17,6 +13,8 @@ logging.basicConfig(
     format='%(asctime)s [%(lineno)d] %(levelname)s %(message)s',
 )
 log = logging.getLogger()
+
+lock = threading.RLock()
 
 
 def load_txt(file_name):
@@ -41,12 +39,14 @@ def load_txt(file_name):
 
 
 def write_txt(file_name, text, append=False):
-    """读取文本"""
+    """写入文本"""
+    lock.acquire()
     mode = 'w+'
     if append:
         mode = 'a+'
     with open(sys.path[0] + "/" + file_name + ".txt", mode) as f:
         f.write(text)
+    lock.release()
 
 
 def del_txt(file_name):
@@ -115,7 +115,6 @@ def get_env(env_name):
 
 
 proxies = []
-lock = threading.RLock()
 
 
 def get_proxy(api_url):
